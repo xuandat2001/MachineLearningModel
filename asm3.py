@@ -371,6 +371,41 @@ print("\nPredictions: ", model.predict(train_set_poly_added[0:9]).round(decimals
 print("Labels:      ", list(train_set_labels[0:9]))
 
 
+
+
+# %% Support Vector Regression (SVR)
+
+from sklearn.svm import SVR
+model = SVR(kernel='rbf')
+model.fit(processed_train_set_val, train_set_labels)
+print('\n____________ Support Vector Regression (SVR) ________')
+r2score, rmse = r2score_and_rmse(model, processed_train_set_val, train_set_labels)
+print('\nR2 score (on training data, best=1):', r2score)
+print("Root Mean Square Error: ", rmse.round(decimals=1))
+store_model(model)
+
+# %% Gradient Boosting Regressor 
+from sklearn.ensemble import GradientBoostingRegressor
+model = GradientBoostingRegressor(n_estimators=100, learning_rate=0.1)
+model.fit(processed_train_set_val, train_set_labels)
+print('\n____________ Gradient Boosting Regressor ________')
+r2score, rmse = r2score_and_rmse(model, processed_train_set_val, train_set_labels)
+print('\nR2 score (on training data, best=1):', r2score)
+print("Root Mean Square Error: ", rmse.round(decimals=1))
+store_model(model)
+# %% XGBoost Regressior
+from xgboost import XGBRegressor
+model = XGBRegressor(n_estimators=100, learning_rate=0.1)
+model.fit(processed_train_set_val, train_set_labels)
+print('\n____________ XGBoost Regressor ________')
+r2score, rmse = r2score_and_rmse(model, processed_train_set_val, train_set_labels)
+print('\nR2 score (on training data, best=1):', r2score)
+print("Root Mean Square Error: ", rmse.round(decimals=1))
+store_model(model)
+
+
+
+
 #%% 5.5 Evaluate with K-fold cross validation 
 
 
@@ -452,35 +487,7 @@ else:
         print("Avg. rmse: ", mean(rmse_scores.round(decimals=1)),'\n')
 #endregion
 
-# %% Support Vector Regression (SVR)
 
-from sklearn.svm import SVR
-model = SVR(kernel='rbf')
-model.fit(processed_train_set_val, train_set_labels)
-print('\n____________ Support Vector Regression (SVR) ________')
-r2score, rmse = r2score_and_rmse(model, processed_train_set_val, train_set_labels)
-print('\nR2 score (on training data, best=1):', r2score)
-print("Root Mean Square Error: ", rmse.round(decimals=1))
-store_model(model)
-
-# %% Gradient Boosting Regressor 
-from sklearn.ensemble import GradientBoostingRegressor
-model = GradientBoostingRegressor(n_estimators=100, learning_rate=0.1)
-model.fit(processed_train_set_val, train_set_labels)
-print('\n____________ Gradient Boosting Regressor ________')
-r2score, rmse = r2score_and_rmse(model, processed_train_set_val, train_set_labels)
-print('\nR2 score (on training data, best=1):', r2score)
-print("Root Mean Square Error: ", rmse.round(decimals=1))
-store_model(model)
-# %% XGBoost Regressior
-from xgboost import XGBRegressor
-model = XGBRegressor(n_estimators=100, learning_rate=0.1)
-model.fit(processed_train_set_val, train_set_labels)
-print('\n____________ XGBoost Regressor ________')
-r2score, rmse = r2score_and_rmse(model, processed_train_set_val, train_set_labels)
-print('\nR2 score (on training data, best=1):', r2score)
-print("Root Mean Square Error: ", rmse.round(decimals=1))
-store_model(model)
 
 # In[6]: STEP 6. FINE-TUNE MODELS 
 # NOTE: this takes TIME
